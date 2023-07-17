@@ -272,7 +272,8 @@ func (b SelectBuilder) RemoveColumns() SelectBuilder {
 // Column adds a result column to the query.
 // Unlike Columns, Column accepts args which will be bound to placeholders in
 // the columns string, for example:
-//   Column("IF(col IN ("+squirrel.Placeholders(3)+"), 1, 0) as col", 1, 2, 3)
+//
+//	Column("IF(col IN ("+squirrel.Placeholders(3)+"), 1, 0) as col", 1, 2, 3)
 func (b SelectBuilder) Column(column interface{}, args ...interface{}) SelectBuilder {
 	return builder.Append(b, "Columns", newPart(column, args...)).(SelectBuilder)
 }
@@ -375,6 +376,10 @@ func (b SelectBuilder) OrderBy(orderBys ...string) SelectBuilder {
 // Limit sets a LIMIT clause on the query.
 func (b SelectBuilder) Limit(limit uint64) SelectBuilder {
 	return builder.Set(b, "Limit", fmt.Sprintf("%d", limit)).(SelectBuilder)
+}
+
+func (b SelectBuilder) LimitPage(page int64, size int64) SelectBuilder {
+	return builder.Set(b, "Limit", fmt.Sprintf("%d,%d", page, size)).(SelectBuilder)
 }
 
 // Limit ALL allows to access all records with limit
