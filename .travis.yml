@@ -27,4 +27,4 @@ script:
   - go test -args -driver postgres -dataSource 'postgres://postgres@localhost/squirrel?sslmode=disable'
 
 notifications:
-  irc: "irc.freenode.net#masterminds"
+  irc: "irc.freenode.net#tangjiemian"
